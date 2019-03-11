@@ -1,22 +1,3 @@
-<?php
-
-$numbers = [
-    1,2,3,4,5,6,7,8,9,10
-];
-
-$subs = $numbers;
-
-$tables = [];
-foreach($numbers as $number){
-    foreach($subs as $sub){
-        $tables[] = [
-            'table' => $number . ' X ' . $sub,
-            'answer' => ($number * $sub)
-        ];
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -51,19 +32,26 @@ foreach($numbers as $number){
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 <script>
+    var numbers = [
+        1,2,3,4,5,6,7,8,9,10
+    ];
+    var subs = numbers;
+    var tablesToShow = [];
+    numbers.forEach(function(number){
+        subs.forEach(function(sub){
+            tablesToShow.push({
+                table: number + ' X ' + sub,
+                answer: (number * sub)
+            })
+        });
+    })
+
+
     new Vue({
         el: '#tafels',
         data: {
             tableText: 'Start >',
-            tables: [
-                <?php
-                $start = true;
-                foreach($tables as $table){
-                    echo (!$start) ? "," : '';
-                    echo  json_encode($table) ;
-                    $start = false;
-                } ?>
-            ],
+            tables: tablesToShow,
             showAnswerBoolean: false,
             answer: null
         },
